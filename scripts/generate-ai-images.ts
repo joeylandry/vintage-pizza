@@ -14,7 +14,20 @@ const OUT_DIR = process.env.OUT_DIR ?? "raw-ai";
 const STYLE =
   "editorial food photography, sharp focus, high detail, appetizing, warm natural light, dark wooden table, no text, no people";
 
+/** Hand-written prompts for dishes the generic prompts rendered poorly. */
+const OVERRIDES: Record<string, string> = {
+  "chicken-tender-dinner": "Photo of crispy golden breaded chicken tenders piled on a plate with seasoned french fries and a cup of creamy coleslaw",
+  "asian-tender-dinner": "Photo of crispy fried chicken tenders glazed in sticky sweet asian sauce with sesame seeds, french fries and a cup of creamy coleslaw on a plate",
+  "buffalo-tender-dinner": "Photo of crispy fried chicken tenders tossed in orange buffalo hot sauce, french fries and a cup of creamy coleslaw on a plate",
+  "chicken-wing-dinner": "Photo of crispy golden fried chicken wings on a plate with french fries and a cup of creamy coleslaw",
+  "buffalo-wing-dinner": "Photo of chicken wings coated in orange buffalo hot sauce on a plate with french fries and a cup of creamy coleslaw",
+  "southwest-eggrolls": "Close-up photo of crispy golden southwest egg rolls cut diagonally showing black beans, corn, chicken and cheese filling, with a small cup of dipping sauce",
+  "jalapeno-poppers": "Close-up photo of golden breaded fried jalapeno poppers, one broken open showing melted cream cheese and green jalapeno inside",
+  "raspberry-beignets": "Close-up photo of square New Orleans beignets heavily dusted with powdered sugar, drizzled with bright red raspberry sauce, fresh raspberries",
+};
+
 function subject(item: MenuItem): string {
+  if (OVERRIDES[item.id]) return OVERRIDES[item.id];
   const d = item.description ? `, ${item.description.toLowerCase()}` : "";
   const n = item.name.replace(/[“”"]/g, "").replace(/17/g, "large");
   switch (item.categoryId) {

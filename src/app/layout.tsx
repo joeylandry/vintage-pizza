@@ -9,6 +9,7 @@ const inter = Inter({ variable: "--font-inter", subsets: ["latin"] });
 const oswald = Oswald({ variable: "--font-oswald", subsets: ["latin"], weight: ["500", "600", "700"] });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "https://www.vintagepizzanh.com"),
   title: {
     default: "Vintage Pizza · Manchester, NH · Order Online",
     template: "%s · Vintage Pizza",
