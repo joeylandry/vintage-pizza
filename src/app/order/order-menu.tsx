@@ -111,7 +111,7 @@ export function OrderMenu() {
       </section>
 
       {/* Sticky category bar + search */}
-      <div className="sticky top-16 z-30 border-b border-line bg-paper/95 backdrop-blur sm:top-[72px]">
+      <div className="sticky top-[72px] z-30 border-b border-line bg-paper/95 backdrop-blur sm:top-24">
         <div className="mx-auto flex max-w-7xl items-center gap-3 px-4 py-3 sm:px-6">
           <div className={clsx("relative shrink-0 sm:block sm:w-64", searchOpen ? "block flex-1" : "hidden")}>
             <SearchIcon className="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 text-muted" width={16} height={16} />
@@ -212,7 +212,7 @@ export function OrderMenu() {
         </div>
 
         <aside className="hidden lg:block" aria-label="Your order">
-          <div className="sticky top-[152px] space-y-4">
+          <div className="sticky top-[176px] space-y-4">
             <OrderModePicker compact />
             {hydrated && <SidebarCart />}
           </div>
@@ -227,7 +227,7 @@ export function OrderMenu() {
 function SidebarCart() {
   const { lines, mode, summary, canCheckout } = useCheckout();
   return (
-    <div className="flex max-h-[calc(100dvh-420px)] min-h-56 flex-col rounded-3xl border border-line bg-white">
+    <div className="flex max-h-[calc(100dvh-444px)] min-h-56 flex-col rounded-3xl border border-line bg-white">
       <div className="flex items-center justify-between px-5 pt-4">
         <h2 className="font-display text-lg font-semibold uppercase tracking-wide">Your order</h2>
         {lines.length > 0 && <span className="text-sm text-muted">{summary.itemCount} items</span>}

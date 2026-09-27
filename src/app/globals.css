@@ -55,7 +55,7 @@ body {
 
 /* Scroll-to-anchor lands below the sticky header + category bar. */
 [data-anchor] {
-  scroll-margin-top: 9.5rem;
+  scroll-margin-top: 11rem;
 }
 
 dialog::backdrop {

@@ -35,9 +35,9 @@ export function Header() {
 
   return (
     <header className="sticky top-0 z-40 bg-ink text-cream">
-      <div className="mx-auto flex h-16 max-w-7xl items-center gap-4 px-4 sm:h-[72px] sm:px-6">
+      <div className="mx-auto flex h-[72px] max-w-7xl items-center gap-4 px-4 sm:h-24 sm:px-6">
         <Link href="/" className="shrink-0" aria-label="Vintage Pizza home">
-          <Image src="/images/logo-white.webp" alt="Vintage Pizza, est. 2014" width={497} height={376} className="h-11 w-auto sm:h-12" loading="eager" />
+          <Image src="/images/logo-white.webp" alt="Vintage Pizza, est. 2014" width={497} height={376} className="h-14 w-auto sm:h-20" loading="eager" />
         </Link>
 
         <nav className="ml-6 hidden items-center gap-1 lg:flex" aria-label="Main">

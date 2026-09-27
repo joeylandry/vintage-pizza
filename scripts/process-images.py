@@ -86,5 +86,8 @@ save(fit(site("g13"), ratio=1, width=800, focus=(0.5, 0.4)), os.path.join(SITE, 
 save(fit(site("g18"), ratio=1, width=800, focus=(0.5, 0.45)), os.path.join(SITE, "sign.webp"))
 save(fit(site("g03"), ratio=1, width=800, focus=(0.5, 0.3)), os.path.join(SITE, "founders.webp"))
 save(fit(site("g20"), ratio=1, width=800), os.path.join(SITE, "cannoli-tray.webp"))
-Image.open(os.path.join(A, "imgs", "logo-white.webp")).save(os.path.join(SITE, "logo-white.webp"), "WEBP", lossless=True)
+# Logo: trim the transparent padding so it can be sized by its artwork.
+logo = Image.open(os.path.join(A, "imgs", "logo-white.webp")).convert("RGBA")
+logo = logo.crop(logo.split()[3].getbbox())
+logo.save(os.path.join(SITE, "logo-white.webp"), "WEBP", lossless=True)
 print("done", len(os.listdir(MENU)), "menu images")

@@ -24,17 +24,25 @@ export default function Home() {
       <section className="relative overflow-hidden bg-ink text-cream">
         <Image src="/images/hero-wide.webp" alt="" fill loading="eager" sizes="100vw" className="object-cover opacity-25" />
         <div className="absolute inset-0 bg-gradient-to-r from-ink via-ink/85 to-ink/40" />
-        <div className="relative mx-auto grid max-w-7xl items-center gap-10 px-4 py-14 sm:px-6 sm:py-20 lg:grid-cols-[1.1fr_0.9fr] lg:py-24">
+        <div className="relative mx-auto grid max-w-7xl items-center gap-10 px-4 py-14 sm:px-6 sm:py-20 lg:grid-cols-[1.3fr_0.7fr] lg:py-24">
           <div>
             <StoreStatusBadge />
             <p className="mt-6 font-display text-sm font-semibold uppercase tracking-[0.25em] text-gold">Manchester, NH · Est. {SITE.founded}</p>
-            <h1 className="mt-3 font-display text-5xl font-bold uppercase leading-[0.95] tracking-wide sm:text-7xl">
-              Best pizza.
-              <br />
-              Best tenders.
-              <br />
-              <span className="text-tomato">Best wings.</span>
-            </h1>
+            <div className="mt-3 flex flex-col-reverse gap-6 sm:flex-row sm:items-center sm:gap-10">
+              <h1 className="font-display text-5xl font-bold uppercase leading-[0.95] tracking-wide sm:text-6xl">
+                <span className="block whitespace-nowrap">Best pizza.</span>
+                <span className="block whitespace-nowrap">Best tenders.</span>
+                <span className="block whitespace-nowrap text-tomato">Best wings.</span>
+              </h1>
+              <Image
+                src="/images/logo-white.webp"
+                alt="Vintage Pizza, est. 2014"
+                width={497}
+                height={376}
+                loading="eager"
+                className="h-32 w-auto self-start drop-shadow-[0_6px_24px_rgba(0,0,0,0.5)] sm:h-44 sm:self-center lg:h-32 xl:h-56"
+              />
+            </div>
             <p className="mt-6 max-w-lg text-lg text-cream/75">
               Grande mozzarella on every pie, hand-breaded tenders with our homemade duck sauce, and fresh salads with our famous house
               Greek dressing.
