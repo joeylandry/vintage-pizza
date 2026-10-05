@@ -31,16 +31,17 @@ const img = (id: string) => ({
 });
 
 export const categories: Category[] = [
-  { id: "specials", name: "Specials", blurb: "Weekday deals. Can't be combined with any other offer." },
-  { id: "pizza", name: "Build Your Own", blurb: 'Hand-stretched and topped with Grande mozzarella. 13" or 17".' },
-  { id: "specialty-pizza", name: "Specialty Pizza", blurb: "House combinations. Get a free cannoli with any large specialty pizza." },
-  { id: "subs", name: "Subs & Syrian Wraps", blurb: "Choose a sub roll or Syrian wrap, then pick your fixings." },
-  { id: "steak-subs", name: "Steak Subs" },
-  { id: "burgers", name: "Burgers", blurb: "Every burger comes with french fries." },
+  { id: "specials", name: "Deals", blurb: "Weekly pizza-night deals. Can't be combined with any other offer." },
+  { id: "appetizers", name: "Appetizers & Sides" },
+  { id: "tenders-wings", name: "Tenders & Wings", blurb: "Award-winning, hand-breaded fresh chicken tenders and fresh wings." },
+  { id: "pizza", name: "Build Your Own Pizza", blurb: 'Hand-tossed and topped with Grande mozzarella. Small 13" or large 17".' },
+  { id: "specialty-pizza", name: "Specialty Pizzas", blurb: "Sausage Ricotta, Texas BBQ and Honey Boy are the fan favorites. Free cannoli with any large specialty pizza." },
   { id: "dinners", name: "Dinners", blurb: "Every dinner comes with french fries and coleslaw." },
   { id: "salads", name: "Fresh Salads", blurb: "Every salad comes with your choice of dressing and Syrian bread." },
-  { id: "appetizers", name: "Appetizers" },
-  { id: "desserts", name: "Desserts" },
+  { id: "grilled-subs", name: "Grilled & Parm Subs" },
+  { id: "subs", name: "Deli Subs", blurb: "Choose a sub roll or Syrian wrap, then pick your fixings." },
+  { id: "burgers", name: "Cheeseburgers", blurb: "Every burger comes with french fries." },
+  { id: "desserts", name: "Desserts", blurb: "Cannoli & beignets." },
 ];
 
 /* ---------- Shared option groups ---------- */
@@ -217,7 +218,10 @@ const sub = (name: string, price: number, extra: Extra = {}) =>
   flat("subs", name, price, { optionGroups: [subBread, subFixings], ...extra });
 
 const steakSub = (name: string, price: number, extra: Extra = {}) =>
-  flat("steak-subs", name, price, { optionGroups: [subFixings], ...extra });
+  flat("grilled-subs", name, price, { optionGroups: [subFixings], ...extra });
+
+const grilledSub = (name: string, price: number, extra: Extra = {}) =>
+  flat("grilled-subs", name, price, { optionGroups: [subBread, subFixings], ...extra });
 
 const burger = (name: string, price: number, extra: Extra = {}) =>
   flat("burgers", name, price, { note: "Served with french fries", ...extra });
@@ -274,7 +278,6 @@ export const menu: MenuItem[] = [
     description: "Grande mozzarella and our house pizza sauce. Add any toppings you like.",
     optionGroups: pizzaOptions,
     favorite: true,
-    popular: true,
   }),
 
   // Specialty pizza
@@ -285,8 +288,8 @@ export const menu: MenuItem[] = [
     popular: true,
   }),
   specialty("Pepperoni Lovers", 13.49, 20.99, "Covered in both Old World pepperoni and bold pepperoni", { favorite: true, popular: true }),
-  specialty("Honey Boy", 15.99, 22.99, "Pizza sauce, Old World pepperoni, ricotta and Mike's Hot Honey drizzle", { favorite: true, popular: true }),
-  specialty("Texas BBQ", 15.49, 21.99, "BBQ sauce, bacon, crispy chicken, pineapple, jalapeño", { favorite: true, popular: true }),
+  specialty("Honey Boy", 15.99, 22.99, "Old World pepperoni, smooth ricotta, Mike's Hot Honey drizzle", { favorite: true, popular: true }),
+  specialty("Texas BBQ", 15.49, 21.99, "Grande mozzarella, crispy chicken, BBQ sauce, pineapple, jalapeño, bacon", { favorite: true, popular: true }),
   specialty("Original Margherita", 12.99, 18.99, "Fresh mozzarella, tomato sauce, olive oil, Romano, basil pesto", { favorite: true }),
   specialty("Fig Jam Bacon & Ricotta", 16.49, 22.99, "Grande mozzarella, ricotta, smoked bacon, fig jam and balsamic glaze", { favorite: true }),
   specialty("Chipotle Chicken", 15.49, 22.99, "Alfredo sauce, crispy chicken, diced tomato, bacon, chipotle drizzle", { favorite: true }),
@@ -299,11 +302,11 @@ export const menu: MenuItem[] = [
   specialty("Steak Bomb", 17.5, 23.99, "Steak, onions, peppers, mushrooms", { id: "steak-bomb-pizza" }),
   specialty("Chicken Broccoli Alfredo", 15.5, 22.99, ""),
 
-  // Subs & Syrian wraps
+  // Subs & Syrian wraps (deli subs; grilled & parm subs use grilledSub)
   sub("Italian", 11.49, { id: "italian-sub", favorite: true }),
   sub("Spicy Italian", 11.49, {
     id: "spicy-italian-sub",
-    description: "Cooked salami, imported ham, spicy bold pepperoni, provolone",
+    description: "Cooked salami, spicy bold pepperoni, imported ham, provolone",
     favorite: true,
     popular: true,
   }),
@@ -316,16 +319,16 @@ export const menu: MenuItem[] = [
   sub("Imported Ham", 11.49, { id: "imported-ham-sub" }),
   sub("BLT", 11.49, { id: "blt-sub" }),
   sub("Genoa Salami", 11.49, { id: "genoa-salami-sub" }),
-  sub("Meatball", 11.49, { id: "meatball-sub" }),
-  sub("Chicken Parmesan", 11.49, { id: "chicken-parmesan-sub" }),
-  sub("Eggplant Parmesan", 11.49, { id: "eggplant-parmesan-sub" }),
-  sub("Grilled Chicken", 12.49, { id: "grilled-chicken-sub" }),
-  sub("Chicken Teriyaki", 12.99, { id: "chicken-teriyaki-sub" }),
-  sub("Grilled Chicken Bomb", 12.99, { id: "grilled-chicken-bomb-sub", description: "Onions, peppers, mushrooms" }),
-  sub("Buffalo Chicken", 12.49, { id: "buffalo-chicken-sub" }),
-  sub("Cheeseburger Sub", 12.49, { id: "cheeseburger-sub" }),
+  grilledSub("Meatball", 11.49, { id: "meatball-sub" }),
+  grilledSub("Chicken Parmesan", 11.49, { id: "chicken-parmesan-sub" }),
+  grilledSub("Eggplant Parmesan", 11.49, { id: "eggplant-parmesan-sub" }),
+  grilledSub("Grilled Chicken", 12.49, { id: "grilled-chicken-sub" }),
+  grilledSub("Chicken Teriyaki", 12.99, { id: "chicken-teriyaki-sub" }),
+  grilledSub("Grilled Chicken Bomb", 12.99, { id: "grilled-chicken-bomb-sub", description: "Onions, peppers, mushrooms" }),
+  grilledSub("Buffalo Chicken", 12.49, { id: "buffalo-chicken-sub" }),
+  grilledSub("Cheeseburger Sub", 12.49, { id: "cheeseburger-sub" }),
 
-  // Steak subs
+  // Steak subs (grilled)
   steakSub("Steak Bomb", 13.49, {
     id: "steak-bomb-sub",
     description: "Grilled onions, grilled peppers, grilled mushrooms, melted cheese",
@@ -346,7 +349,7 @@ export const menu: MenuItem[] = [
 
   // Dinners
   dinner("Chicken Tender Dinner", 15.99, {
-    description: "Fresh hand-breaded tenders, seasoned fries, homemade coleslaw, duck sauce",
+    description: "Fresh breaded tenders, seasoned fries, homemade coleslaw, duck sauce",
     favorite: true,
     popular: true,
   }),
@@ -371,14 +374,14 @@ export const menu: MenuItem[] = [
   salad("Grilled Chicken Caesar Salad", 12.99, { optionGroups: [extraDressing] }),
 
   // Appetizers
-  sized("appetizers", "Chicken Tenders", twoSizes(11.49, 16.99, "8 pieces", "16 pieces"), { favorite: true, popular: true }),
-  sized("appetizers", "Asian Tenders", twoSizes(11.99, 17.75), { favorite: true }),
-  sized("appetizers", "Buffalo Tenders", twoSizes(11.99, 17.49)),
-  sized("appetizers", "BBQ Tenders", twoSizes(11.99, 17.49)),
-  sized("appetizers", "Chicken Wings", twoSizes(11.99, 18.49), { favorite: true }),
-  sized("appetizers", "Asian Wings", twoSizes(12.49, 18.99), { favorite: true }),
-  sized("appetizers", "Buffalo Wings", twoSizes(12.49, 18.99)),
-  sized("appetizers", "BBQ Wings", twoSizes(12.99, 18.99)),
+  sized("tenders-wings", "Chicken Tenders", twoSizes(11.49, 16.99, "8 pieces", "16 pieces"), { favorite: true }),
+  sized("tenders-wings", "Asian Tenders", twoSizes(11.99, 17.75), { favorite: true }),
+  sized("tenders-wings", "Buffalo Tenders", twoSizes(11.99, 17.49)),
+  sized("tenders-wings", "BBQ Tenders", twoSizes(11.99, 17.49)),
+  sized("tenders-wings", "Chicken Wings", twoSizes(11.99, 18.49), { favorite: true }),
+  sized("tenders-wings", "Asian Wings", twoSizes(12.49, 18.99), { favorite: true }),
+  sized("tenders-wings", "Buffalo Wings", twoSizes(12.49, 18.99)),
+  sized("tenders-wings", "BBQ Wings", twoSizes(12.99, 18.99)),
   sized("appetizers", "Mozzarella Sticks", twoSizes(9.99, 15.99)),
   flat("appetizers", "Sticks & Stones", 11.99, { description: "5 mozzarella sticks and 5 jalapeño poppers" }),
   flat("appetizers", "Garlic Bread with Cheese", 5.99, { favorite: true }),
@@ -390,7 +393,7 @@ export const menu: MenuItem[] = [
   flat("appetizers", "Jalapeño Poppers", 10.99, { id: "jalapeno-poppers", description: "Cream cheese filled" }),
   flat("appetizers", "Southwest Eggrolls", 11.99),
   flat("appetizers", "Meatballs & Sauce", 9.49),
-  flat("appetizers", "Chicken Tender Party Tray", 49.99, { description: "Over 60 pieces — built for a crowd" }),
+  flat("tenders-wings", "Chicken Tender Party Tray", 49.99, { description: "Over 60 pieces — built for a crowd" }),
 
   // Desserts
   flat("desserts", "Cannoli", 3.49, { description: "Freshly filled with our sweetened ricotta", favorite: true, popular: true }),
@@ -407,6 +410,21 @@ export const menuById: Record<string, MenuItem> = Object.fromEntries(menu.map((m
 export const getItem = (id: string): MenuItem | undefined => menuById[id];
 
 export const itemsInCategory = (categoryId: string) => menu.filter((m) => m.categoryId === categoryId);
+
+/** The homepage "Popular Picks", in the same order and with the same names as on vintagepizzanh.com. */
+export const POPULAR_PICKS: { id: string; name: string }[] = [
+  { id: "sausage-ricotta", name: "Sausage & Ricotta Pizza" },
+  { id: "pepperoni-lovers", name: "Pepperoni Lovers Pizza" },
+  { id: "texas-bbq", name: "Texas BBQ Pizza" },
+  { id: "honey-boy", name: "Honey Boy Pizza" },
+  { id: "spicy-italian-sub", name: "Spicy Italian Sub" },
+  { id: "steak-bomb-sub", name: "Steak Bomb" },
+  { id: "chicken-tender-dinner", name: "Chicken Tender Dinner" },
+  { id: "grilled-chicken-greek-salad", name: "Grilled Chicken Greek Salad" },
+  { id: "asian-tender-salad", name: "Asian Tender Salad" },
+  { id: "cannoli", name: "Cannoli" },
+  { id: "beignets", name: "Beignets" },
+];
 
 export const popularItems = () => menu.filter((m) => m.popular);
 

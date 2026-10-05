@@ -11,8 +11,8 @@ POS submission get wired in.
 
 | Page | What it does |
 | --- | --- |
-| `/` | Hero, weekly deals (today's deal highlighted), popular picks you can add straight from the page, the story, photos, hours, map |
-| `/order` | Full menu with sticky category bar + scrollspy, search, pickup/delivery picker, live order sidebar (desktop) or sticky order bar (mobile) |
+| `/` | Same order as the live homepage: welcome hero with Order Online + PDF Menu, Popular Picks (add straight from the page), weekly deals, photos, the story, location/hours/phone |
+| `/order` | Step 1 **Order details** (pickup or delivery + address), like the old Weborder flow; then the full menu, grouped like Weborder (Deals, Appetizers & Sides, Tenders & Wings, pizzas, Dinners, Salads, Grilled & Parm Subs, Deli Subs, Cheeseburgers, Desserts), with search, a live order sidebar (desktop) or sticky order bar (mobile) |
 | `/cart` | Edit/merge/remove lines, quantity, kitchen notes, add-on suggestions, pickup/delivery + address, totals, Checkout button |
 | `/checkout` | Placeholder for the payment step |
 

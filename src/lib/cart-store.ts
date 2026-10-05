@@ -13,6 +13,8 @@ type CartState = {
   mode: OrderMode;
   address: DeliveryAddress;
   orderNotes: string;
+  /** The customer has been through the "Order details" step (pickup or delivery) at least once. */
+  detailsConfirmed: boolean;
   /** Adds a line, merging with an identical existing line. Returns the resulting lineId. */
   add: (line: Omit<CartLine, "lineId">) => string;
   /** Replaces an existing line's configuration (used by "Edit"). */
@@ -23,6 +25,7 @@ type CartState = {
   setMode: (mode: OrderMode) => void;
   setAddress: (address: Partial<DeliveryAddress>) => void;
   setOrderNotes: (notes: string) => void;
+  setDetailsConfirmed: (confirmed: boolean) => void;
 };
 
 const clampQty = (n: number) => Math.max(1, Math.min(MAX_QTY, Math.floor(n) || 1));
@@ -39,6 +42,7 @@ export const useCart = create<CartState>()(
       mode: "pickup",
       address: { street: "", unit: "", city: "Manchester", zip: "" },
       orderNotes: "",
+      detailsConfirmed: false,
       add: (line) => {
         const key = lineKey(line);
         const existing = get().lines.find((l) => lineKey(l) === key);
@@ -76,6 +80,7 @@ export const useCart = create<CartState>()(
       setMode: (mode) => set({ mode }),
       setAddress: (address) => set({ address: { ...get().address, ...address } }),
       setOrderNotes: (orderNotes) => set({ orderNotes }),
+      setDetailsConfirmed: (detailsConfirmed) => set({ detailsConfirmed }),
     }),
     {
       name: "vintage-pizza-cart",

@@ -5,18 +5,20 @@ import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { CartLineRow } from "@/components/cart-line";
-import { ArrowRightIcon, BagIcon, ClockIcon, CloseIcon, SearchIcon } from "@/components/icons";
+import { ArrowRightIcon, BagIcon, CarIcon, ClockIcon, CloseIcon, SearchIcon, StoreIcon } from "@/components/icons";
 import { MenuCard } from "@/components/menu-card";
-import { OrderModePicker } from "@/components/order-mode";
+import { OrderSteps } from "@/components/order-steps";
 import { SummaryRows } from "@/components/order-summary";
 import { useOrderUI } from "@/components/providers";
 import { useStoreStatus } from "@/components/store-status";
 import { useCheckout } from "@/components/use-checkout";
 import { useNow } from "@/components/use-now";
+import { useCart } from "@/lib/cart-store";
 import { isAvailableNow } from "@/lib/hours";
 import { categories, getItem, menu } from "@/lib/menu";
 import { formatMoney } from "@/lib/pricing";
-import { SITE } from "@/lib/site";
+import { SITE, fullAddress } from "@/lib/site";
+import { OrderDetailsStep } from "./order-details";
 
 const normalize = (s: string) =>
   s
@@ -28,6 +30,24 @@ export function OrderMenu() {
   const { openItem, hydrated } = useOrderUI();
   const params = useSearchParams();
   const router = useRouter();
+  const detailsConfirmed = useCart((s) => s.detailsConfirmed);
+
+  // Deep link: /order?item=honey-boy opens that item.
+  const deepItem = params.get("item");
+  useEffect(() => {
+    if (deepItem && getItem(deepItem)) {
+      openItem(deepItem);
+      router.replace("/order", { scroll: false });
+    }
+  }, [deepItem, openItem, router]);
+
+  // Like the old ordering site, step 1 is "Order details" (pickup or delivery); the menu comes after.
+  if (hydrated && !detailsConfirmed) return <OrderDetailsStep />;
+  return <MenuView />;
+}
+
+function MenuView() {
+  const { hydrated } = useOrderUI();
   const now = useNow();
   const status = useStoreStatus();
   const [query, setQuery] = useState("");
@@ -40,14 +60,11 @@ export function OrderMenu() {
   const [active, setActive] = useState(categories[0].id);
   const navRef = useRef<HTMLDivElement>(null);
 
-  // Deep link: /order?item=honey-boy opens that item.
-  const deepItem = params.get("item");
+  // A link like /order#specials lands here after the "Order details" step: jump to that category.
   useEffect(() => {
-    if (deepItem && getItem(deepItem)) {
-      openItem(deepItem);
-      router.replace("/order", { scroll: false });
-    }
-  }, [deepItem, openItem, router]);
+    const id = window.location.hash.slice(1);
+    if (id) document.getElementById(id)?.scrollIntoView();
+  }, []);
 
   const q = normalize(query.trim());
   const sections = useMemo(
@@ -89,12 +106,15 @@ export function OrderMenu() {
   return (
     <div className="bg-paper">
       <section className="border-b border-line bg-cream/60">
-        <div className="mx-auto max-w-7xl px-4 pb-6 pt-8 sm:px-6 sm:pt-10">
-          <p className="font-display text-sm font-semibold uppercase tracking-[0.2em] text-tomato">Vintage Pizza · Candia Rd</p>
-          <h1 className="mt-1 font-display text-4xl font-bold uppercase tracking-wide sm:text-5xl">Order Online</h1>
-          <p className="mt-2 max-w-2xl text-muted">
-            Pickup or delivery ($2.99). Tap anything to customize it — sizes, toppings on the whole pie or either half, dressings and more.
-          </p>
+        <div className="mx-auto max-w-7xl px-4 pb-6 pt-6 sm:px-6 sm:pt-8">
+          <OrderSteps current="Menu" />
+          <div className="mt-5 flex flex-wrap items-end justify-between gap-4">
+            <div>
+              <h1 className="font-display text-4xl font-bold uppercase tracking-wide sm:text-5xl">Full menu</h1>
+              <p className="mt-1 max-w-2xl text-muted">Tap anything to customize it — sizes, toppings on the whole pie or either half, dressings and more.</p>
+            </div>
+            {hydrated && <OrderDetailsBar />}
+          </div>
           {status && !status.open && (
             <div className="mt-5 flex items-start gap-3 rounded-2xl border border-tomato/20 bg-tomato/5 px-4 py-3 text-sm" role="status">
               <ClockIcon className="mt-0.5 shrink-0 text-tomato" width={18} height={18} />
@@ -174,10 +194,6 @@ export function OrderMenu() {
 
       <div className="mx-auto grid max-w-7xl grid-cols-[minmax(0,1fr)] gap-8 px-4 pb-32 pt-6 sm:px-6 lg:grid-cols-[minmax(0,1fr)_360px] lg:pb-16">
         <div>
-          <div className="mb-8 lg:hidden">
-            <OrderModePicker compact />
-          </div>
-
           {sections.length === 0 && (
             <div className="rounded-3xl border border-dashed border-line px-6 py-16 text-center">
               <p className="font-display text-xl uppercase">No matches for “{query}”</p>
@@ -212,8 +228,7 @@ export function OrderMenu() {
         </div>
 
         <aside className="hidden lg:block" aria-label="Your order">
-          <div className="sticky top-[176px] space-y-4">
-            <OrderModePicker compact />
+          <div className="sticky top-[176px]">
             {hydrated && <SidebarCart />}
           </div>
         </aside>
@@ -224,10 +239,36 @@ export function OrderMenu() {
   );
 }
 
+/** Shows the choice made in the "Order details" step, with a way back to change it. */
+function OrderDetailsBar() {
+  const mode = useCart((s) => s.mode);
+  const address = useCart((s) => s.address);
+  const change = useCart((s) => s.setDetailsConfirmed);
+  const Icon = mode === "pickup" ? StoreIcon : CarIcon;
+  const where = mode === "pickup" ? fullAddress : [address.street, address.unit].filter(Boolean).join(", ");
+  return (
+    <div className="flex w-full items-center gap-3 rounded-2xl border border-line bg-white px-4 py-3 text-sm sm:w-auto sm:max-w-md">
+      <Icon className="shrink-0 text-tomato" width={22} height={22} />
+      <div className="min-w-0 flex-1">
+        <p className="font-semibold">{mode === "pickup" ? "Pickup" : "Delivery · $2.99"}</p>
+        <p className="truncate text-muted">{where || "Address needed"}</p>
+      </div>
+      <button
+        type="button"
+        onClick={() => change(false)}
+        className="shrink-0 rounded-full px-3 py-1.5 font-semibold text-tomato hover:bg-tomato/5"
+        aria-label="Change order details"
+      >
+        Change
+      </button>
+    </div>
+  );
+}
+
 function SidebarCart() {
   const { lines, mode, summary, canCheckout } = useCheckout();
   return (
-    <div className="flex max-h-[calc(100dvh-444px)] min-h-56 flex-col rounded-3xl border border-line bg-white">
+    <div className="flex max-h-[calc(100dvh-200px)] min-h-56 flex-col rounded-3xl border border-line bg-white">
       <div className="flex items-center justify-between px-5 pt-4">
         <h2 className="font-display text-lg font-semibold uppercase tracking-wide">Your order</h2>
         {lines.length > 0 && <span className="text-sm text-muted">{summary.itemCount} items</span>}

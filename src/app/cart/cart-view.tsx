@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import { CartLineRow } from "@/components/cart-line";
 import { ArrowRightIcon, BagIcon } from "@/components/icons";
 import { OrderModePicker } from "@/components/order-mode";
+import { OrderSteps } from "@/components/order-steps";
 import { SummaryRows } from "@/components/order-summary";
 import { useOrderUI } from "@/components/providers";
 import { useCheckout } from "@/components/use-checkout";
@@ -48,7 +49,8 @@ export function CartView() {
   const addOns = ADD_ONS.filter((id) => !inCart.has(id)).map((id) => getItem(id)!).filter(Boolean).slice(0, 4);
 
   return (
-    <div className="mx-auto max-w-6xl px-4 pb-16 pt-8 sm:px-6 sm:pt-10">
+    <div className="mx-auto max-w-6xl px-4 pb-16 pt-6 sm:px-6 sm:pt-8">
+      <OrderSteps current="Your order" className="mb-6" />
       <div className="flex flex-wrap items-end justify-between gap-3">
         <div>
           <Link href="/order" className="text-sm font-semibold text-tomato hover:underline">
