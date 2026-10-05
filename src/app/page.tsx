@@ -5,8 +5,6 @@ import { ArrowRightIcon, ClockIcon, PhoneIcon, PinIcon } from "@/components/icon
 import { PopularPicks } from "@/components/popular-picks";
 import { StoreStatusBadge } from "@/components/store-status";
 import { HOURS_DISPLAY } from "@/lib/hours";
-import { getItem } from "@/lib/menu";
-import { formatMoney, startingPrice } from "@/lib/pricing";
 import { SITE } from "@/lib/site";
 
 const GALLERY = [
@@ -21,14 +19,11 @@ export default function Home() {
   return (
     <>
       {/* Hero */}
-      <section className="relative overflow-hidden bg-ink text-cream">
-        <Image src="/images/hero-wide.webp" alt="" fill loading="eager" sizes="100vw" className="object-cover opacity-25" />
-        <div className="absolute inset-0 bg-gradient-to-r from-ink via-ink/85 to-ink/40" />
-        <div className="relative mx-auto grid max-w-7xl items-center gap-10 px-4 py-14 sm:px-6 sm:py-20 lg:grid-cols-[1.3fr_0.7fr] lg:py-24">
+      <section className="bg-ink text-cream">
+        <div className="mx-auto grid max-w-7xl items-center gap-10 px-4 py-14 sm:px-6 sm:py-20 lg:grid-cols-[1.2fr_0.8fr] lg:py-24">
           <div>
-            <StoreStatusBadge />
-            <p className="mt-6 font-display text-sm font-semibold uppercase tracking-[0.25em] text-gold">Manchester, NH · Est. {SITE.founded}</p>
-            <div className="mt-3 flex flex-col-reverse gap-6 sm:flex-row sm:items-center sm:gap-10">
+            <StoreStatusBadge className="mb-6 md:hidden" />
+            <div className="flex flex-col-reverse gap-6 sm:flex-row sm:items-center sm:gap-10">
               <h1 className="font-display text-5xl font-bold uppercase leading-[0.95] tracking-wide sm:text-6xl">
                 <span className="block whitespace-nowrap">Best pizza.</span>
                 <span className="block whitespace-nowrap">Best tenders.</span>
@@ -40,59 +35,32 @@ export default function Home() {
                 width={497}
                 height={376}
                 loading="eager"
-                className="h-32 w-auto self-start drop-shadow-[0_6px_24px_rgba(0,0,0,0.5)] sm:h-44 sm:self-center lg:h-32 xl:h-56"
+                className="h-32 w-auto self-start sm:h-44 sm:self-center lg:h-32 xl:h-48"
               />
             </div>
-            <p className="mt-6 max-w-lg text-lg text-cream/75">
-              Grande mozzarella on every pie, hand-breaded tenders with our homemade duck sauce, and fresh salads with our famous house
-              Greek dressing.
-            </p>
-            <div className="mt-8 flex flex-wrap gap-3">
+            <p className="mt-6 max-w-md text-lg text-cream/70">Pickup or delivery on Candia Road in Manchester, NH since {SITE.founded}.</p>
+            <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-4">
               <Link
                 href="/order"
                 className="inline-flex h-14 items-center gap-2 rounded-full bg-tomato px-7 text-lg font-semibold text-white shadow-lift transition hover:bg-tomato-dark"
               >
                 Start your order <ArrowRightIcon />
               </Link>
-              <a
-                href={SITE.phoneHref}
-                className="inline-flex h-14 items-center gap-2 rounded-full border border-cream/25 px-6 font-semibold transition hover:bg-white/10"
-              >
+              <a href={SITE.phoneHref} className="inline-flex items-center gap-2 font-semibold text-cream/80 transition hover:text-cream">
                 <PhoneIcon width={18} height={18} /> {SITE.phone}
               </a>
             </div>
-            <p className="mt-5 text-sm text-cream/60">
-              Pickup or delivery ($2.99) ·{" "}
-              <a href={SITE.pdfMenu} target="_blank" rel="noopener noreferrer" className="underline underline-offset-4 hover:text-cream">
-                Printable menu (PDF)
-              </a>
-            </p>
           </div>
-          <div className="relative mx-auto w-full max-w-md lg:max-w-none">
-            <div className="relative aspect-[4/5] overflow-hidden rounded-[2rem] shadow-lift ring-1 ring-white/10">
-              <Image
-                src="/images/hero-pizzas.webp"
-                alt="Fresh Vintage Pizza pies in their boxes"
-                fill
-                loading="eager"
-                fetchPriority="high"
-                sizes="(min-width: 1024px) 40vw, 90vw"
-                className="object-cover"
-              />
-            </div>
-            <Link
-              href="/order?item=sausage-ricotta"
-              className="absolute -bottom-5 left-4 right-4 flex items-center gap-3 rounded-2xl bg-paper p-3 text-ink shadow-lift transition hover:-translate-y-0.5 sm:-left-6 sm:right-auto sm:max-w-xs"
-            >
-              <span className="relative size-14 shrink-0 overflow-hidden rounded-xl">
-                <Image src="/menu/sausage-ricotta.webp" alt="" fill sizes="56px" className="object-cover" />
-              </span>
-              <span className="min-w-0">
-                <span className="block text-xs font-semibold uppercase tracking-wider text-tomato">House favorite</span>
-                <span className="block font-display text-lg font-semibold uppercase leading-tight">Sausage & Ricotta</span>
-                <span className="block text-sm text-muted">from {formatMoney(startingPrice(getItem("sausage-ricotta")!))}</span>
-              </span>
-            </Link>
+          <div className="relative mx-auto aspect-[4/5] w-full max-w-md overflow-hidden rounded-[2rem] lg:max-w-none">
+            <Image
+              src="/images/hero-pizzas.webp"
+              alt="Fresh Vintage Pizza pies in their boxes"
+              fill
+              loading="eager"
+              fetchPriority="high"
+              sizes="(min-width: 1024px) 40vw, 90vw"
+              className="object-cover"
+            />
           </div>
         </div>
       </section>
