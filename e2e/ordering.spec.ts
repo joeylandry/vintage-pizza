@@ -19,6 +19,18 @@ test("home page shows the brand, deals and popular picks", async ({ page }) => {
   await expect(page.getByText("Today", { exact: true })).toBeVisible(); // Mon & Tue deal highlighted
 });
 
+test("the open/closed badge expands to show the week's hours", async ({ page }) => {
+  await page.goto("/");
+  const badge = page.getByRole("button", { name: "Open until 8 PM" }).filter({ visible: true }).first();
+  await badge.click();
+  await expect(badge).toHaveAttribute("aria-expanded", "true");
+  const panel = page.locator(`[id="${await badge.getAttribute("aria-controls")}"]`);
+  await expect(panel).toContainText("Friday – Saturday");
+  await expect(panel).toContainText("241 Candia Rd");
+  await page.keyboard.press("Escape");
+  await expect(badge).toHaveAttribute("aria-expanded", "false");
+});
+
 test("popular pick on the home page can be added without leaving the page", async ({ page }) => {
   await page.goto("/");
   const dialog = await openItem(page, "Chicken Tender Dinner");

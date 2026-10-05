@@ -12,8 +12,7 @@ import { StoreStatusBadge } from "./store-status";
 
 const NAV = [
   { href: "/#popular", label: "Popular Picks" },
-  { href: "/#story", label: "Our Story" },
-  { href: "/#visit", label: "Hours & Location" },
+  { href: "/#story", label: "About" },
 ];
 
 export function Header() {
@@ -104,7 +103,7 @@ export function Header() {
             <a href={SITE.phoneHref} className="mt-2 flex items-center gap-2 rounded-xl px-3 py-3 font-semibold hover:bg-white/10">
               <PhoneIcon width={18} height={18} /> Call {SITE.phone}
             </a>
-            <StoreStatusBadge className="mx-3 mb-2 mt-1 self-start" />
+            <StoreStatusBadge align="start" className="mx-3 mb-2 mt-1 self-start" />
           </nav>
         </div>
       )}

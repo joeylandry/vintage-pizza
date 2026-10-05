@@ -19,7 +19,7 @@ export default function Home() {
   return (
     <>
       {/* Hero */}
-      <section className="relative isolate overflow-hidden bg-ink text-cream">
+      <section className="relative isolate bg-ink text-cream">
         <Image
           src="/images/hero-wide.webp"
           alt=""
@@ -44,7 +44,6 @@ export default function Home() {
             <span className="block">Best tenders.</span>
             <span className="block text-tomato">Best wings.</span>
           </h1>
-          <p className="mt-6 max-w-md text-lg text-cream/85">Hand-tossed pizza, award-winning chicken tenders and fresh wings. Order online for pickup or delivery.</p>
           <div className="mt-8 flex flex-wrap items-center justify-center gap-x-6 gap-y-4">
             <Link
               href="/order"
@@ -52,14 +51,6 @@ export default function Home() {
             >
               Order Online <ArrowRightIcon />
             </Link>
-            <a
-              href={SITE.pdfMenu}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="font-semibold text-cream/90 underline-offset-4 transition hover:text-cream hover:underline"
-            >
-              PDF Menu
-            </a>
             <a href={SITE.phoneHref} className="inline-flex items-center gap-2 font-semibold text-cream/90 transition hover:text-cream">
               <PhoneIcon width={18} height={18} /> {SITE.phone}
             </a>
@@ -88,7 +79,6 @@ export default function Home() {
         <div className="mb-8 flex flex-wrap items-end justify-between gap-4">
           <div>
             <h2 className="font-display text-4xl font-bold uppercase tracking-wide">Popular Picks</h2>
-            <p className="mt-1 text-muted">What Manchester orders most. Add them straight from here.</p>
           </div>
           <Link href="/order" className="inline-flex items-center gap-2 rounded-full border border-ink px-5 py-2.5 font-semibold transition hover:bg-ink hover:text-cream">
             Full menu <ArrowRightIcon width={18} height={18} />
