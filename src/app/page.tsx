@@ -20,24 +20,21 @@ export default function Home() {
     <>
       {/* Hero */}
       <section className="bg-ink text-cream">
-        <div className="mx-auto grid max-w-7xl items-center gap-10 px-4 py-14 sm:px-6 sm:py-20 lg:grid-cols-[1.2fr_0.8fr] lg:py-24">
-          <div>
-            <StoreStatusBadge className="mb-6 md:hidden" />
-            <div className="flex flex-col-reverse gap-6 sm:flex-row sm:items-center sm:gap-10">
-              <h1 className="font-display text-5xl font-bold uppercase leading-[0.95] tracking-wide sm:text-6xl">
-                <span className="block whitespace-nowrap">Best pizza.</span>
-                <span className="block whitespace-nowrap">Best tenders.</span>
-                <span className="block whitespace-nowrap text-tomato">Best wings.</span>
-              </h1>
-              <Image
-                src="/images/logo-white.webp"
-                alt="Vintage Pizza, est. 2014"
-                width={497}
-                height={376}
-                loading="eager"
-                className="h-32 w-auto self-start sm:h-44 sm:self-center lg:h-32 xl:h-48"
-              />
-            </div>
+        <div className="mx-auto grid max-w-7xl items-center gap-10 px-4 py-14 sm:px-6 sm:py-20 lg:grid-cols-[1.1fr_0.9fr] lg:gap-16 lg:py-24">
+          <div className="flex flex-col items-start">
+            <Image
+              src="/images/logo-white.webp"
+              alt="Vintage Pizza, est. 2014"
+              width={497}
+              height={376}
+              loading="eager"
+              className="h-24 w-auto sm:h-32"
+            />
+            <h1 className="mt-8 font-display text-5xl font-bold uppercase leading-[0.95] tracking-wide sm:text-7xl">
+              <span className="block">Best pizza.</span>
+              <span className="block">Best tenders.</span>
+              <span className="block text-tomato">Best wings.</span>
+            </h1>
             <p className="mt-6 max-w-md text-lg text-cream/70">Pickup or delivery on Candia Road in Manchester, NH since {SITE.founded}.</p>
             <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-4">
               <Link
@@ -50,6 +47,7 @@ export default function Home() {
                 <PhoneIcon width={18} height={18} /> {SITE.phone}
               </a>
             </div>
+            <StoreStatusBadge className="mt-6 md:hidden" />
           </div>
           <div className="relative mx-auto aspect-[4/5] w-full max-w-md overflow-hidden rounded-[2rem] lg:max-w-none">
             <Image
