@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { OrderSteps } from "@/components/order-steps";
 import { SITE } from "@/lib/site";
 
 export const metadata: Metadata = { title: "Checkout", robots: { index: false } };
@@ -11,8 +12,8 @@ export const metadata: Metadata = { title: "Checkout", robots: { index: false } 
 export default function CheckoutPage() {
   return (
     <div className="mx-auto flex min-h-[60vh] max-w-xl flex-col items-center justify-center px-4 py-16 text-center">
-      <p className="font-display text-sm font-semibold uppercase tracking-[0.2em] text-tomato">Checkout</p>
-      <h1 className="mt-2 font-display text-3xl font-bold uppercase tracking-wide">Payment step coming soon</h1>
+      <OrderSteps current="Checkout" className="mb-8" />
+      <h1 className=" font-display text-3xl font-bold uppercase tracking-wide">Payment step coming soon</h1>
       <p className="mt-3 text-muted">
         Your order is saved on this device. To place it now, call us at{" "}
         <a href={SITE.phoneHref} className="font-semibold text-ink underline underline-offset-2">

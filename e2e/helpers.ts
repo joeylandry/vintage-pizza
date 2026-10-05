@@ -32,3 +32,14 @@ export async function cartCount(page: Page) {
 }
 
 export const total = (page: Page) => page.getByTestId("order-total").first();
+
+/** Opens the menu, passing the "Order details" step (pickup) the first time. */
+export async function gotoMenu(page: Page) {
+  await page.goto("/order");
+  // The server renders the menu; once the saved order loads, either the step replaces it or the details bar appears.
+  const step = page.getByRole("heading", { name: "Order details", level: 1 });
+  const ready = page.getByRole("button", { name: "Change order details" });
+  await expect(step.or(ready)).toBeVisible();
+  if (await step.isVisible()) await page.getByRole("button", { name: /Continue to menu/ }).click();
+  await expect(ready).toBeVisible();
+}

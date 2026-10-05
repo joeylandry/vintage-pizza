@@ -1,5 +1,5 @@
 import { expect, test } from "@playwright/test";
-import { addToOrder, at, cartCount, isMobile, MONDAY_NOON, openItem, SATURDAY_NOON, SUNDAY_NOON, total, WEDNESDAY_NOON } from "./helpers";
+import { addToOrder, at, cartCount, gotoMenu, isMobile, MONDAY_NOON, openItem, SATURDAY_NOON, SUNDAY_NOON, total, WEDNESDAY_NOON } from "./helpers";
 
 test.beforeEach(async ({ page }) => {
   await at(page, MONDAY_NOON);
@@ -9,7 +9,7 @@ test("home page shows the brand, deals and popular picks", async ({ page }) => {
   await page.goto("/");
   await expect(page.getByRole("heading", { level: 1 })).toContainText("Best pizza");
   await expect(page.getByText("Open until 8 PM").filter({ visible: true }).first()).toBeVisible();
-  await expect(page.getByRole("heading", { name: "What Manchester orders" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "Popular Picks" })).toBeVisible();
   await expect(page.getByRole("heading", { name: "Weekly deals" })).toBeVisible();
   await expect(page.getByText("Today", { exact: true })).toBeVisible(); // Mon & Tue deal highlighted
 });
@@ -24,7 +24,7 @@ test("popular pick on the home page can be added without leaving the page", asyn
 });
 
 test("build-your-own pizza prices toppings by size and half", async ({ page }) => {
-  await page.goto("/order");
+  await gotoMenu(page);
   const d = await openItem(page, "Classic Cheese Pizza");
   // Defaults to large.
   await expect(d.getByRole("radio", { name: /Large 17"/ })).toHaveAttribute("aria-checked", "true");
@@ -50,7 +50,7 @@ test("build-your-own pizza prices toppings by size and half", async ({ page }) =
 });
 
 test("salads require a dressing and charge for extra", async ({ page }) => {
-  await page.goto("/order");
+  await gotoMenu(page);
   const d = await openItem(page, "Garden Salad");
   await d.getByRole("button", { name: /Add to order/ }).click();
   await expect(d.getByRole("alert")).toHaveText("Choose one");
@@ -64,7 +64,7 @@ test("salads require a dressing and charge for extra", async ({ page }) => {
 });
 
 test("subs offer a sub roll or Syrian wrap and free fixings", async ({ page }) => {
-  await page.goto("/order");
+  await gotoMenu(page);
   const d = await openItem(page, "Italian");
   await expect(d.getByRole("radio", { name: "Sub Roll" })).toHaveAttribute("aria-checked", "true");
   await d.getByRole("radio", { name: "Syrian Wrap" }).click();
@@ -79,7 +79,7 @@ test("subs offer a sub roll or Syrian wrap and free fixings", async ({ page }) =
 });
 
 test("weekday specials are only orderable on their days", async ({ page }) => {
-  await page.goto("/order");
+  await gotoMenu(page);
   let d = await openItem(page, 'Large 17" One-Topping Pizza');
   await d.getByRole("button", { name: /Add to order/ }).click();
   await expect(d.getByRole("alert")).toHaveText("Choose one");
@@ -92,7 +92,7 @@ test("weekday specials are only orderable on their days", async ({ page }) => {
 });
 
 test("a Monday special left in the cart blocks checkout on Wednesday", async ({ page }) => {
-  await page.goto("/order");
+  await gotoMenu(page);
   await openItem(page, 'Large 17" Cheese Pizza');
   await addToOrder(page);
   await at(page, WEDNESDAY_NOON);
@@ -104,7 +104,7 @@ test("a Monday special left in the cart blocks checkout on Wednesday", async ({ 
 });
 
 test("$5 off orders of $50 or more", async ({ page }) => {
-  await page.goto("/order");
+  await gotoMenu(page);
   await openItem(page, "Chicken Tender Party Tray");
   await addToOrder(page);
   await page.goto("/cart");
@@ -118,14 +118,14 @@ test("$5 off orders of $50 or more", async ({ page }) => {
 });
 
 test("large specialty pizza earns a free cannoli; specials can't be combined", async ({ page }) => {
-  await page.goto("/order");
+  await gotoMenu(page);
   const d = await openItem(page, "Honey Boy");
   await d.getByRole("radio", { name: /Large 17"/ }).click();
   await addToOrder(page);
   await page.goto("/cart");
   await expect(page.getByTestId("free-cannoli")).toContainText("Cannoli × 1");
 
-  await page.goto("/order");
+  await gotoMenu(page);
   await openItem(page, 'Large 17" Cheese Pizza');
   await addToOrder(page);
   await page.goto("/cart");
@@ -134,7 +134,7 @@ test("large specialty pizza earns a free cannoli; specials can't be combined", a
 });
 
 test("identical items merge; quantity, edit and remove work", async ({ page }) => {
-  await page.goto("/order");
+  await gotoMenu(page);
   await openItem(page, "Cannoli");
   await addToOrder(page);
   await openItem(page, "Cannoli");
@@ -148,7 +148,7 @@ test("identical items merge; quantity, edit and remove work", async ({ page }) =
   await page.getByRole("button", { name: "Decrease quantity" }).click();
   await expect(page.getByTestId("cart-line")).toContainText("$6.98");
 
-  await page.goto("/order");
+  await gotoMenu(page);
   const d = await openItem(page, "Chicken Wings");
   await expect(d.getByRole("radio", { name: /Small/ })).toHaveAttribute("aria-checked", "true");
   await addToOrder(page);
@@ -165,7 +165,7 @@ test("identical items merge; quantity, edit and remove work", async ({ page }) =
 });
 
 test("the order survives a reload", async ({ page }) => {
-  await page.goto("/order");
+  await gotoMenu(page);
   await openItem(page, "Beignets");
   await addToOrder(page);
   await page.reload();
@@ -175,7 +175,7 @@ test("the order survives a reload", async ({ page }) => {
 });
 
 test("delivery adds the $2.99 charge and needs an address before checkout", async ({ page }) => {
-  await page.goto("/order");
+  await gotoMenu(page);
   await openItem(page, "French Fries");
   await addToOrder(page);
   await page.goto("/cart");
@@ -198,7 +198,7 @@ test("delivery adds the $2.99 charge and needs an address before checkout", asyn
 
 test("checkout is disabled while the store is closed", async ({ page }) => {
   await at(page, SUNDAY_NOON);
-  await page.goto("/order");
+  await gotoMenu(page);
   await expect(page.getByText(/We're closed right now/)).toBeVisible();
   await openItem(page, "Cannoli");
   await addToOrder(page);
@@ -214,7 +214,7 @@ test("Saturday hours run until 9 PM", async ({ page }) => {
 });
 
 test("menu search filters items", async ({ page }) => {
-  await page.goto("/order");
+  await gotoMenu(page);
   if (isMobile(page)) await page.getByRole("button", { name: "Search the menu" }).click();
   await page.getByRole("searchbox", { name: "Search the menu" }).fill("wings");
   await expect(page.getByRole("button", { name: /^Buffalo Wings,/ })).toBeVisible();
@@ -225,6 +225,26 @@ test("menu search filters items", async ({ page }) => {
   await expect(page.getByText("No matches for “sushi”")).toBeVisible();
 });
 
+test("ordering starts with order details: pickup or delivery", async ({ page }) => {
+  await page.goto("/order");
+  await expect(page.getByRole("heading", { name: "Order details", level: 1 })).toBeVisible();
+  await page.getByRole("radio", { name: /Delivery/ }).click();
+  await page.getByRole("button", { name: /Continue to menu/ }).click();
+  await expect(page.getByText("Add your delivery address to continue.")).toBeVisible();
+  await page.getByLabel("Street address").fill("123 Elm St");
+  await page.getByLabel("ZIP code").fill("03109");
+  await page.getByRole("button", { name: /Continue to menu/ }).click();
+  await expect(page.getByRole("heading", { name: "Full menu", level: 1 })).toBeVisible();
+  await expect(page.getByText("123 Elm St").first()).toBeVisible();
+
+  // The choice is remembered, and can be changed from the menu.
+  await page.reload();
+  await expect(page.getByRole("heading", { name: "Full menu", level: 1 })).toBeVisible();
+  await page.getByRole("button", { name: "Change order details" }).click();
+  await expect(page.getByRole("heading", { name: "Order details", level: 1 })).toBeVisible();
+  await expect(page.getByRole("radio", { name: /Delivery/ })).toHaveAttribute("aria-checked", "true");
+});
+
 test("deep link opens an item", async ({ page }) => {
   await page.goto("/order?item=honey-boy");
   await expect(page.getByRole("dialog").getByRole("heading", { name: "Honey Boy" })).toBeVisible();
@@ -232,7 +252,7 @@ test("deep link opens an item", async ({ page }) => {
 });
 
 test("item sheet closes with Escape and the close button", async ({ page }) => {
-  await page.goto("/order");
+  await gotoMenu(page);
   await openItem(page, "Onion Rings");
   await page.keyboard.press("Escape");
   await expect(page.getByRole("dialog")).toBeHidden();
@@ -243,7 +263,7 @@ test("item sheet closes with Escape and the close button", async ({ page }) => {
 
 test("mobile shows a sticky order bar", async ({ page }) => {
   test.skip(!isMobile(page), "mobile only");
-  await page.goto("/order");
+  await gotoMenu(page);
   await openItem(page, "Cannoli");
   await addToOrder(page);
   const bar = page.getByRole("link", { name: /View order\s*\$3\.79/ });

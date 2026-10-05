@@ -27,7 +27,7 @@ export default function Home() {
         <div className="relative mx-auto grid max-w-7xl items-center gap-10 px-4 py-14 sm:px-6 sm:py-20 lg:grid-cols-[1.3fr_0.7fr] lg:py-24">
           <div>
             <StoreStatusBadge />
-            <p className="mt-6 font-display text-sm font-semibold uppercase tracking-[0.25em] text-gold">Manchester, NH · Est. {SITE.founded}</p>
+            <p className="mt-6 font-display text-sm font-semibold uppercase tracking-[0.25em] text-gold">Welcome to Vintage Pizza</p>
             <div className="mt-3 flex flex-col-reverse gap-6 sm:flex-row sm:items-center sm:gap-10">
               <h1 className="font-display text-5xl font-bold uppercase leading-[0.95] tracking-wide sm:text-6xl">
                 <span className="block whitespace-nowrap">Best pizza.</span>
@@ -44,27 +44,28 @@ export default function Home() {
               />
             </div>
             <p className="mt-6 max-w-lg text-lg text-cream/75">
-              Grande mozzarella on every pie, hand-breaded tenders with our homemade duck sauce, and fresh salads with our famous house
-              Greek dressing.
+              Hand-tossed pizza, award-winning chicken tenders and fresh wings. Order online for pickup or delivery.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <Link
                 href="/order"
                 className="inline-flex h-14 items-center gap-2 rounded-full bg-tomato px-7 text-lg font-semibold text-white shadow-lift transition hover:bg-tomato-dark"
               >
-                Start your order <ArrowRightIcon />
+                Order Online <ArrowRightIcon />
               </Link>
               <a
-                href={SITE.phoneHref}
+                href={SITE.pdfMenu}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="inline-flex h-14 items-center gap-2 rounded-full border border-cream/25 px-6 font-semibold transition hover:bg-white/10"
               >
-                <PhoneIcon width={18} height={18} /> {SITE.phone}
+                PDF Menu
               </a>
             </div>
             <p className="mt-5 text-sm text-cream/60">
-              Pickup or delivery ($2.99) ·{" "}
-              <a href={SITE.pdfMenu} target="_blank" rel="noopener noreferrer" className="underline underline-offset-4 hover:text-cream">
-                Printable menu (PDF)
+              Delivery $2.99 · Call{" "}
+              <a href={SITE.phoneHref} className="font-semibold text-cream underline-offset-4 hover:underline">
+                {SITE.phone}
               </a>
             </p>
           </div>
@@ -97,25 +98,12 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Deals */}
-      <section className="bg-ink-soft text-cream">
-        <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6">
-          <div className="mb-6 flex flex-wrap items-end justify-between gap-3">
-            <h2 className="font-display text-3xl font-bold uppercase tracking-wide">Weekly deals</h2>
-            <Link href="/order#specials" className="text-sm font-semibold text-gold hover:underline">
-              Order a special →
-            </Link>
-          </div>
-          <Deals />
-        </div>
-      </section>
-
       {/* Popular picks */}
-      <section className="mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-20">
+      <section id="popular" data-anchor className="mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-20">
         <div className="mb-8 flex flex-wrap items-end justify-between gap-4">
           <div>
-            <p className="font-display text-sm font-semibold uppercase tracking-[0.2em] text-tomato">Popular picks</p>
-            <h2 className="mt-1 font-display text-4xl font-bold uppercase tracking-wide">What Manchester orders</h2>
+            <h2 className="font-display text-4xl font-bold uppercase tracking-wide">Popular Picks</h2>
+            <p className="mt-1 text-muted">What Manchester orders most. Add them straight from here.</p>
           </div>
           <Link href="/order" className="inline-flex items-center gap-2 rounded-full border border-ink px-5 py-2.5 font-semibold transition hover:bg-ink hover:text-cream">
             Full menu <ArrowRightIcon width={18} height={18} />
@@ -124,27 +112,16 @@ export default function Home() {
         <PopularPicks />
       </section>
 
-      {/* Story */}
-      <section id="story" data-anchor className="bg-cream">
-        <div className="mx-auto grid max-w-7xl items-center gap-10 px-4 py-16 sm:px-6 sm:py-20 lg:grid-cols-2">
-          <div className="relative aspect-[3/2] overflow-hidden rounded-[2rem] shadow-lift">
-            <Image src="/images/team.webp" alt="The Vintage Pizza crew in the kitchen" fill sizes="(min-width: 1024px) 50vw, 100vw" className="object-cover" />
+      {/* Deals */}
+      <section className="bg-ink-soft text-cream">
+        <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6">
+          <div className="mb-6 flex flex-wrap items-end justify-between gap-3">
+            <h2 className="font-display text-3xl font-bold uppercase tracking-wide">Weekly deals</h2>
+            <Link href="/order#specials" className="text-sm font-semibold text-gold hover:underline">
+              Order a deal →
+            </Link>
           </div>
-          <div>
-            <p className="font-display text-sm font-semibold uppercase tracking-[0.2em] text-tomato">Our story</p>
-            <h2 className="mt-1 font-display text-4xl font-bold uppercase tracking-wide">Brothers, a best friend & a pizza oven</h2>
-            <div className="mt-5 space-y-4 text-ink-soft">
-              <p>
-                Vintage Pizza was started in {SITE.founded} by brothers Kris and Jamie and their best friend Jon. They took what they learned
-                working at their uncle&apos;s pizza shop and combined it with new ideas from across the food industry.
-              </p>
-              <p>
-                Today we&apos;re one of the busiest takeout and delivery spots in Manchester — thanks to customers who&apos;ve stuck with us
-                even when the wait gets long. Every day the team works on new ways to make things faster and better for you.
-              </p>
-              <p className="font-semibold text-ink">We hope to see you soon!</p>
-            </div>
-          </div>
+          <Deals />
         </div>
       </section>
 
@@ -159,6 +136,34 @@ export default function Home() {
               <Image src={g.src} alt={g.alt} fill sizes="(min-width: 768px) 33vw, 50vw" className="object-cover transition duration-500 hover:scale-105" />
             </div>
           ))}
+        </div>
+      </section>
+
+      {/* Story */}
+      <section id="story" data-anchor className="bg-cream">
+        <div className="mx-auto grid max-w-7xl items-center gap-10 px-4 py-16 sm:px-6 sm:py-20 lg:grid-cols-2">
+          <div className="relative aspect-[3/2] overflow-hidden rounded-[2rem] shadow-lift">
+            <Image src="/images/team.webp" alt="The Vintage Pizza crew in the kitchen" fill sizes="(min-width: 1024px) 50vw, 100vw" className="object-cover" />
+          </div>
+          <div>
+            <p className="font-display text-sm font-semibold uppercase tracking-[0.2em] text-tomato">Our story</p>
+            <h2 className="mt-1 font-display text-4xl font-bold uppercase tracking-wide">Brothers, a best friend & a pizza oven</h2>
+            <p className="mt-5 text-lg font-medium text-ink">
+              The busiest delivery and takeout spot in Manchester, for good reason: consistent, high-quality pizza made only with Grande
+              mozzarella, hand-breaded chicken tenders with our homemade duck sauce, and fresh salads with our famous house Greek dressing.
+            </p>
+            <div className="mt-4 space-y-4 text-ink-soft">
+              <p>
+                Vintage Pizza was started in {SITE.founded} by brothers Kris and Jamie and their best friend Jon. They took what they learned
+                working at their uncle&apos;s pizza shop and combined it with new ideas from across the food industry.
+              </p>
+              <p>
+                Today we&apos;re one of the busiest takeout and delivery spots in Manchester — thanks to customers who&apos;ve stuck with us
+                even when the wait gets long. Every day the team works on new ways to make things faster and better for you.
+              </p>
+              <p className="font-semibold text-ink">We hope to see you soon!</p>
+            </div>
+          </div>
         </div>
       </section>
 
