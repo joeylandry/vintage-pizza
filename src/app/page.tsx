@@ -98,6 +98,21 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Deals */}
+      <section className="border-b border-line bg-cream" aria-labelledby="deals-title">
+        <div className="mx-auto max-w-7xl px-4 py-6 sm:px-6">
+          <div className="mb-3 flex flex-wrap items-baseline justify-between gap-x-4 gap-y-1">
+            <h2 id="deals-title" className="font-display text-xl font-bold uppercase tracking-wide">
+              Weekly deals <span className="ml-1 font-sans text-xs font-normal normal-case tracking-normal text-muted">Can&apos;t be combined with other offers</span>
+            </h2>
+            <Link href="/order#specials" className="text-sm font-semibold text-tomato hover:underline">
+              Order a deal →
+            </Link>
+          </div>
+          <Deals />
+        </div>
+      </section>
+
       {/* Popular picks */}
       <section id="popular" data-anchor className="mx-auto max-w-7xl px-4 py-16 sm:px-6 sm:py-20">
         <div className="mb-8 flex flex-wrap items-end justify-between gap-4">
@@ -110,19 +125,6 @@ export default function Home() {
           </Link>
         </div>
         <PopularPicks />
-      </section>
-
-      {/* Deals */}
-      <section className="bg-ink-soft text-cream">
-        <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6">
-          <div className="mb-6 flex flex-wrap items-end justify-between gap-3">
-            <h2 className="font-display text-3xl font-bold uppercase tracking-wide">Weekly deals</h2>
-            <Link href="/order#specials" className="text-sm font-semibold text-gold hover:underline">
-              Order a deal →
-            </Link>
-          </div>
-          <Deals />
-        </div>
       </section>
 
       {/* Gallery */}
