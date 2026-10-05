@@ -19,47 +19,44 @@ export default function Home() {
   return (
     <>
       {/* Hero */}
-      <section className="bg-ink text-cream">
-        <div className="mx-auto grid max-w-7xl items-center gap-10 px-4 py-14 sm:px-6 sm:py-20 lg:grid-cols-[1.1fr_0.9fr] lg:gap-16 lg:py-24">
-          <div className="flex flex-col items-start">
-            <Image
-              src="/images/logo-white.webp"
-              alt="Vintage Pizza, est. 2014"
-              width={497}
-              height={376}
-              loading="eager"
-              className="h-24 w-auto sm:h-32"
-            />
-            <h1 className="mt-8 font-display text-5xl font-bold uppercase leading-[0.95] tracking-wide sm:text-7xl">
-              <span className="block">Best pizza.</span>
-              <span className="block">Best tenders.</span>
-              <span className="block text-tomato">Best wings.</span>
-            </h1>
-            <p className="mt-6 max-w-md text-lg text-cream/70">Pickup or delivery on Candia Road in Manchester, NH since {SITE.founded}.</p>
-            <div className="mt-8 flex flex-wrap items-center gap-x-6 gap-y-4">
-              <Link
-                href="/order"
-                className="inline-flex h-14 items-center gap-2 rounded-full bg-tomato px-7 text-lg font-semibold text-white shadow-lift transition hover:bg-tomato-dark"
-              >
-                Start your order <ArrowRightIcon />
-              </Link>
-              <a href={SITE.phoneHref} className="inline-flex items-center gap-2 font-semibold text-cream/80 transition hover:text-cream">
-                <PhoneIcon width={18} height={18} /> {SITE.phone}
-              </a>
-            </div>
-            <StoreStatusBadge className="mt-6 md:hidden" />
+      <section className="relative isolate overflow-hidden bg-ink text-cream">
+        <Image
+          src="/images/hero-wide.webp"
+          alt=""
+          fill
+          loading="eager"
+          fetchPriority="high"
+          sizes="100vw"
+          className="-z-10 object-cover"
+        />
+        <div className="absolute inset-0 -z-10 bg-ink/70" />
+        <div className="mx-auto flex min-h-[560px] max-w-3xl flex-col items-center justify-center px-4 py-16 text-center sm:min-h-[680px] sm:px-6">
+          <Image
+            src="/images/logo-white.webp"
+            alt="Vintage Pizza, est. 2014"
+            width={497}
+            height={376}
+            loading="eager"
+            className="h-24 w-auto drop-shadow-[0_4px_16px_rgba(0,0,0,0.5)] sm:h-32"
+          />
+          <h1 className="mt-8 font-display text-5xl font-bold uppercase leading-[0.95] tracking-wide [text-shadow:0_2px_24px_rgba(0,0,0,0.45)] sm:text-7xl">
+            <span className="block">Best pizza.</span>
+            <span className="block">Best tenders.</span>
+            <span className="block text-tomato">Best wings.</span>
+          </h1>
+          <p className="mt-6 max-w-md text-lg text-cream/85">Pickup or delivery on Candia Road in Manchester, NH since {SITE.founded}.</p>
+          <div className="mt-8 flex flex-wrap items-center justify-center gap-x-6 gap-y-4">
+            <Link
+              href="/order"
+              className="inline-flex h-14 items-center gap-2 rounded-full bg-tomato px-7 text-lg font-semibold text-white shadow-lift transition hover:bg-tomato-dark"
+            >
+              Start your order <ArrowRightIcon />
+            </Link>
+            <a href={SITE.phoneHref} className="inline-flex items-center gap-2 font-semibold text-cream/90 transition hover:text-cream">
+              <PhoneIcon width={18} height={18} /> {SITE.phone}
+            </a>
           </div>
-          <div className="relative mx-auto aspect-[4/5] w-full max-w-md overflow-hidden rounded-[2rem] lg:max-w-none">
-            <Image
-              src="/images/hero-pizzas.webp"
-              alt="Fresh Vintage Pizza pies in their boxes"
-              fill
-              loading="eager"
-              fetchPriority="high"
-              sizes="(min-width: 1024px) 40vw, 90vw"
-              className="object-cover"
-            />
-          </div>
+          <StoreStatusBadge className="mt-6 md:hidden" />
         </div>
       </section>
 
