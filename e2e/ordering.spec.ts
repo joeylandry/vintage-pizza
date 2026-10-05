@@ -10,6 +10,11 @@ test("home page shows the brand, deals and popular picks", async ({ page }) => {
   await expect(page.getByRole("heading", { level: 1 })).toContainText("Best pizza");
   await expect(page.getByText("Open until 8 PM").filter({ visible: true }).first()).toBeVisible();
   await expect(page.getByRole("heading", { name: "Popular Picks" })).toBeVisible();
+  // Same picks, in the same order, as the live vintagepizzanh.com homepage.
+  const picks = page.locator("#popular li button");
+  await expect(picks).toHaveCount(11);
+  await expect(picks.first()).toHaveAccessibleName("Sausage & Ricotta Pizza, $14.49 / $21.99");
+  await expect(picks.last()).toHaveAccessibleName("Beignets, $7.99");
   await expect(page.getByRole("heading", { name: "Weekly deals" })).toBeVisible();
   await expect(page.getByText("Today", { exact: true })).toBeVisible(); // Mon & Tue deal highlighted
 });

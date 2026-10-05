@@ -278,7 +278,6 @@ export const menu: MenuItem[] = [
     description: "Grande mozzarella and our house pizza sauce. Add any toppings you like.",
     optionGroups: pizzaOptions,
     favorite: true,
-    popular: true,
   }),
 
   // Specialty pizza
@@ -289,8 +288,8 @@ export const menu: MenuItem[] = [
     popular: true,
   }),
   specialty("Pepperoni Lovers", 13.49, 20.99, "Covered in both Old World pepperoni and bold pepperoni", { favorite: true, popular: true }),
-  specialty("Honey Boy", 15.99, 22.99, "Pizza sauce, Old World pepperoni, ricotta and Mike's Hot Honey drizzle", { favorite: true, popular: true }),
-  specialty("Texas BBQ", 15.49, 21.99, "BBQ sauce, bacon, crispy chicken, pineapple, jalapeño", { favorite: true, popular: true }),
+  specialty("Honey Boy", 15.99, 22.99, "Old World pepperoni, smooth ricotta, Mike's Hot Honey drizzle", { favorite: true, popular: true }),
+  specialty("Texas BBQ", 15.49, 21.99, "Grande mozzarella, crispy chicken, BBQ sauce, pineapple, jalapeño, bacon", { favorite: true, popular: true }),
   specialty("Original Margherita", 12.99, 18.99, "Fresh mozzarella, tomato sauce, olive oil, Romano, basil pesto", { favorite: true }),
   specialty("Fig Jam Bacon & Ricotta", 16.49, 22.99, "Grande mozzarella, ricotta, smoked bacon, fig jam and balsamic glaze", { favorite: true }),
   specialty("Chipotle Chicken", 15.49, 22.99, "Alfredo sauce, crispy chicken, diced tomato, bacon, chipotle drizzle", { favorite: true }),
@@ -307,7 +306,7 @@ export const menu: MenuItem[] = [
   sub("Italian", 11.49, { id: "italian-sub", favorite: true }),
   sub("Spicy Italian", 11.49, {
     id: "spicy-italian-sub",
-    description: "Cooked salami, imported ham, spicy bold pepperoni, provolone",
+    description: "Cooked salami, spicy bold pepperoni, imported ham, provolone",
     favorite: true,
     popular: true,
   }),
@@ -350,7 +349,7 @@ export const menu: MenuItem[] = [
 
   // Dinners
   dinner("Chicken Tender Dinner", 15.99, {
-    description: "Fresh hand-breaded tenders, seasoned fries, homemade coleslaw, duck sauce",
+    description: "Fresh breaded tenders, seasoned fries, homemade coleslaw, duck sauce",
     favorite: true,
     popular: true,
   }),
@@ -375,7 +374,7 @@ export const menu: MenuItem[] = [
   salad("Grilled Chicken Caesar Salad", 12.99, { optionGroups: [extraDressing] }),
 
   // Appetizers
-  sized("tenders-wings", "Chicken Tenders", twoSizes(11.49, 16.99, "8 pieces", "16 pieces"), { favorite: true, popular: true }),
+  sized("tenders-wings", "Chicken Tenders", twoSizes(11.49, 16.99, "8 pieces", "16 pieces"), { favorite: true }),
   sized("tenders-wings", "Asian Tenders", twoSizes(11.99, 17.75), { favorite: true }),
   sized("tenders-wings", "Buffalo Tenders", twoSizes(11.99, 17.49)),
   sized("tenders-wings", "BBQ Tenders", twoSizes(11.99, 17.49)),
@@ -411,6 +410,21 @@ export const menuById: Record<string, MenuItem> = Object.fromEntries(menu.map((m
 export const getItem = (id: string): MenuItem | undefined => menuById[id];
 
 export const itemsInCategory = (categoryId: string) => menu.filter((m) => m.categoryId === categoryId);
+
+/** The homepage "Popular Picks", in the same order and with the same names as on vintagepizzanh.com. */
+export const POPULAR_PICKS: { id: string; name: string }[] = [
+  { id: "sausage-ricotta", name: "Sausage & Ricotta Pizza" },
+  { id: "pepperoni-lovers", name: "Pepperoni Lovers Pizza" },
+  { id: "texas-bbq", name: "Texas BBQ Pizza" },
+  { id: "honey-boy", name: "Honey Boy Pizza" },
+  { id: "spicy-italian-sub", name: "Spicy Italian Sub" },
+  { id: "steak-bomb-sub", name: "Steak Bomb" },
+  { id: "chicken-tender-dinner", name: "Chicken Tender Dinner" },
+  { id: "grilled-chicken-greek-salad", name: "Grilled Chicken Greek Salad" },
+  { id: "asian-tender-salad", name: "Asian Tender Salad" },
+  { id: "cannoli", name: "Cannoli" },
+  { id: "beignets", name: "Beignets" },
+];
 
 export const popularItems = () => menu.filter((m) => m.popular);
 
