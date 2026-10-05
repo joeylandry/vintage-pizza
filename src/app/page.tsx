@@ -31,6 +31,7 @@ export default function Home() {
         />
         <div className="absolute inset-0 -z-10 bg-ink/70" />
         <div className="mx-auto flex min-h-[560px] max-w-3xl flex-col items-center justify-center px-4 py-16 text-center sm:min-h-[680px] sm:px-6">
+          <StoreStatusBadge className="mb-6 md:hidden" />
           <Image
             src="/images/logo-white.webp"
             alt="Vintage Pizza, est. 2014"
@@ -55,7 +56,6 @@ export default function Home() {
               <PhoneIcon width={18} height={18} /> {SITE.phone}
             </a>
           </div>
-          <StoreStatusBadge className="mt-6 md:hidden" />
         </div>
       </section>
 
