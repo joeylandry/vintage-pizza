@@ -11,8 +11,7 @@ import { CloseIcon, MenuIcon, PhoneIcon } from "./icons";
 import { StoreStatusBadge } from "./store-status";
 
 const NAV = [
-  { href: "/order", label: "Order Online" },
-  { href: "/order#specials", label: "Specials" },
+  { href: "/#popular", label: "Popular Picks" },
   { href: "/#story", label: "Our Story" },
   { href: "/#visit", label: "Hours & Location" },
 ];
@@ -53,6 +52,9 @@ export function Header() {
               {n.label}
             </Link>
           ))}
+          <a href={SITE.pdfMenu} target="_blank" rel="noopener noreferrer" className="rounded-full px-3.5 py-2 text-sm font-medium transition hover:bg-white/10">
+            PDF Menu
+          </a>
         </nav>
 
         <div className="ml-auto flex items-center gap-2 sm:gap-3">
@@ -62,6 +64,15 @@ export function Header() {
           <a href={SITE.phoneHref} className="hidden items-center gap-2 rounded-full px-3 py-2 text-sm font-semibold hover:bg-white/10 xl:inline-flex">
             <PhoneIcon width={16} height={16} /> {SITE.phone}
           </a>
+          <Link
+            href="/order"
+            className={clsx(
+              "hidden h-11 items-center rounded-full bg-tomato px-5 text-sm font-semibold text-white transition hover:bg-tomato-dark sm:inline-flex",
+              pathname === "/order" && "ring-2 ring-cream/40",
+            )}
+          >
+            Order Online
+          </Link>
           <CartButton />
           <button
             type="button"
@@ -79,11 +90,17 @@ export function Header() {
       {open && (
         <div id="mobile-nav" className="animate-fade-in border-t border-white/10 bg-ink lg:hidden">
           <nav className="mx-auto flex max-w-7xl flex-col px-4 py-3" aria-label="Mobile">
+            <Link href="/order" onClick={() => setOpen(false)} className="mb-1 rounded-xl bg-tomato px-3 py-3 font-display text-lg uppercase tracking-wide text-white">
+              Order Online
+            </Link>
             {NAV.map((n) => (
               <Link key={n.href} href={n.href} onClick={() => setOpen(false)} className="rounded-xl px-3 py-3 font-display text-lg uppercase tracking-wide hover:bg-white/10">
                 {n.label}
               </Link>
             ))}
+            <a href={SITE.pdfMenu} target="_blank" rel="noopener noreferrer" className="rounded-xl px-3 py-3 font-display text-lg uppercase tracking-wide hover:bg-white/10">
+              PDF Menu
+            </a>
             <a href={SITE.phoneHref} className="mt-2 flex items-center gap-2 rounded-xl px-3 py-3 font-semibold hover:bg-white/10">
               <PhoneIcon width={18} height={18} /> Call {SITE.phone}
             </a>

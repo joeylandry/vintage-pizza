@@ -39,7 +39,7 @@ function subject(item: MenuItem): string {
     case "specialty-pizza":
       return `Top-down photo of a whole round New York style ${n} pizza${d}, bubbling mozzarella, charred blistered crust, on a pizza tray`;
     case "subs":
-    case "steak-subs":
+    case "grilled-subs":
       return `Close-up photo of a ${n} sub sandwich${d}, on a toasted Italian sub roll, cut in half, on butcher paper`;
     case "burgers":
       return `Close-up photo of a juicy ${n}${d}, melted cheese on a toasted sesame bun, crispy golden french fries beside it`;
