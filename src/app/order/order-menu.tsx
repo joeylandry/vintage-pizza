@@ -111,7 +111,6 @@ function MenuView() {
           <div className="mt-5 flex flex-wrap items-end justify-between gap-4">
             <div>
               <h1 className="font-display text-4xl font-bold uppercase tracking-wide sm:text-5xl">Full menu</h1>
-              <p className="mt-1 max-w-2xl text-muted">Tap anything to customize it — sizes, toppings on the whole pie or either half, dressings and more.</p>
             </div>
             {hydrated && <OrderDetailsBar />}
           </div>

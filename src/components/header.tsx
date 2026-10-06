@@ -12,8 +12,7 @@ import { StoreStatusBadge } from "./store-status";
 
 const NAV = [
   { href: "/#popular", label: "Popular Picks" },
-  { href: "/#story", label: "Our Story" },
-  { href: "/#visit", label: "Hours & Location" },
+  { href: "/#story", label: "About" },
 ];
 
 export function Header() {
@@ -34,7 +33,7 @@ export function Header() {
 
   return (
     <header className="sticky top-0 z-40 bg-ink text-cream">
-      <div className="mx-auto flex h-[72px] max-w-7xl items-center gap-4 px-4 sm:h-24 sm:px-6">
+      <div className="mx-auto flex h-[72px] max-w-7xl items-center gap-3 px-4 sm:gap-4 sm:h-24 sm:px-6">
         <Link href="/" className="shrink-0" aria-label="Vintage Pizza home">
           <Image src="/images/logo-white.webp" alt="Vintage Pizza, est. 2014" width={497} height={376} className="h-14 w-auto sm:h-20" loading="eager" />
         </Link>
@@ -58,9 +57,7 @@ export function Header() {
         </nav>
 
         <div className="ml-auto flex items-center gap-2 sm:gap-3">
-          <span className="hidden md:block">
-            <StoreStatusBadge />
-          </span>
+          <StoreStatusBadge />
           <a href={SITE.phoneHref} className="hidden items-center gap-2 rounded-full px-3 py-2 text-sm font-semibold hover:bg-white/10 xl:inline-flex">
             <PhoneIcon width={16} height={16} /> {SITE.phone}
           </a>
@@ -104,7 +101,6 @@ export function Header() {
             <a href={SITE.phoneHref} className="mt-2 flex items-center gap-2 rounded-xl px-3 py-3 font-semibold hover:bg-white/10">
               <PhoneIcon width={18} height={18} /> Call {SITE.phone}
             </a>
-            <StoreStatusBadge className="mx-3 mb-2 mt-1 self-start" />
           </nav>
         </div>
       )}

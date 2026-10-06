@@ -3,10 +3,7 @@ import Link from "next/link";
 import { Deals } from "@/components/deals";
 import { ArrowRightIcon, ClockIcon, PhoneIcon, PinIcon } from "@/components/icons";
 import { PopularPicks } from "@/components/popular-picks";
-import { StoreStatusBadge } from "@/components/store-status";
 import { HOURS_DISPLAY } from "@/lib/hours";
-import { getItem } from "@/lib/menu";
-import { formatMoney, startingPrice } from "@/lib/pricing";
 import { SITE } from "@/lib/site";
 
 const GALLERY = [
@@ -21,79 +18,41 @@ export default function Home() {
   return (
     <>
       {/* Hero */}
-      <section className="relative overflow-hidden bg-ink text-cream">
-        <Image src="/images/hero-wide.webp" alt="" fill loading="eager" sizes="100vw" className="object-cover opacity-25" />
-        <div className="absolute inset-0 bg-gradient-to-r from-ink via-ink/85 to-ink/40" />
-        <div className="relative mx-auto grid max-w-7xl items-center gap-10 px-4 py-14 sm:px-6 sm:py-20 lg:grid-cols-[1.3fr_0.7fr] lg:py-24">
-          <div>
-            <StoreStatusBadge />
-            <p className="mt-6 font-display text-sm font-semibold uppercase tracking-[0.25em] text-gold">Welcome to Vintage Pizza</p>
-            <div className="mt-3 flex flex-col-reverse gap-6 sm:flex-row sm:items-center sm:gap-10">
-              <h1 className="font-display text-5xl font-bold uppercase leading-[0.95] tracking-wide sm:text-6xl">
-                <span className="block whitespace-nowrap">Best pizza.</span>
-                <span className="block whitespace-nowrap">Best tenders.</span>
-                <span className="block whitespace-nowrap text-tomato">Best wings.</span>
-              </h1>
-              <Image
-                src="/images/logo-white.webp"
-                alt="Vintage Pizza, est. 2014"
-                width={497}
-                height={376}
-                loading="eager"
-                className="h-32 w-auto self-start drop-shadow-[0_6px_24px_rgba(0,0,0,0.5)] sm:h-44 sm:self-center lg:h-32 xl:h-56"
-              />
-            </div>
-            <p className="mt-6 max-w-lg text-lg text-cream/75">
-              Hand-tossed pizza, award-winning chicken tenders and fresh wings. Order online for pickup or delivery.
-            </p>
-            <div className="mt-8 flex flex-wrap gap-3">
-              <Link
-                href="/order"
-                className="inline-flex h-14 items-center gap-2 rounded-full bg-tomato px-7 text-lg font-semibold text-white shadow-lift transition hover:bg-tomato-dark"
-              >
-                Order Online <ArrowRightIcon />
-              </Link>
-              <a
-                href={SITE.pdfMenu}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex h-14 items-center gap-2 rounded-full border border-cream/25 px-6 font-semibold transition hover:bg-white/10"
-              >
-                PDF Menu
-              </a>
-            </div>
-            <p className="mt-5 text-sm text-cream/60">
-              Delivery $2.99 · Call{" "}
-              <a href={SITE.phoneHref} className="font-semibold text-cream underline-offset-4 hover:underline">
-                {SITE.phone}
-              </a>
-            </p>
-          </div>
-          <div className="relative mx-auto w-full max-w-md lg:max-w-none">
-            <div className="relative aspect-[4/5] overflow-hidden rounded-[2rem] shadow-lift ring-1 ring-white/10">
-              <Image
-                src="/images/hero-pizzas.webp"
-                alt="Fresh Vintage Pizza pies in their boxes"
-                fill
-                loading="eager"
-                fetchPriority="high"
-                sizes="(min-width: 1024px) 40vw, 90vw"
-                className="object-cover"
-              />
-            </div>
+      <section className="relative isolate bg-ink text-cream">
+        <Image
+          src="/images/hero-wide.webp"
+          alt=""
+          fill
+          loading="eager"
+          fetchPriority="high"
+          sizes="100vw"
+          className="-z-10 object-cover"
+        />
+        <div className="absolute inset-0 -z-10 bg-ink/70" />
+        <div className="mx-auto flex min-h-[560px] max-w-3xl flex-col items-center justify-center px-4 py-16 text-center sm:min-h-[680px] sm:px-6">
+          <Image
+            src="/images/logo-white.webp"
+            alt="Vintage Pizza, est. 2014"
+            width={497}
+            height={376}
+            loading="eager"
+            className="h-24 w-auto drop-shadow-[0_4px_16px_rgba(0,0,0,0.5)] sm:h-32"
+          />
+          <h1 className="mt-8 font-display text-5xl font-bold uppercase leading-[0.95] tracking-wide [text-shadow:0_2px_24px_rgba(0,0,0,0.45)] sm:text-7xl">
+            <span className="block">Best pizza.</span>
+            <span className="block">Best tenders.</span>
+            <span className="block text-tomato">Best wings.</span>
+          </h1>
+          <div className="mt-8 flex flex-wrap items-center justify-center gap-x-6 gap-y-4">
             <Link
-              href="/order?item=sausage-ricotta"
-              className="absolute -bottom-5 left-4 right-4 flex items-center gap-3 rounded-2xl bg-paper p-3 text-ink shadow-lift transition hover:-translate-y-0.5 sm:-left-6 sm:right-auto sm:max-w-xs"
+              href="/order"
+              className="inline-flex h-14 items-center gap-2 rounded-full bg-tomato px-7 text-lg font-semibold text-white shadow-lift transition hover:bg-tomato-dark"
             >
-              <span className="relative size-14 shrink-0 overflow-hidden rounded-xl">
-                <Image src="/menu/sausage-ricotta.webp" alt="" fill sizes="56px" className="object-cover" />
-              </span>
-              <span className="min-w-0">
-                <span className="block text-xs font-semibold uppercase tracking-wider text-tomato">House favorite</span>
-                <span className="block font-display text-lg font-semibold uppercase leading-tight">Sausage & Ricotta</span>
-                <span className="block text-sm text-muted">from {formatMoney(startingPrice(getItem("sausage-ricotta")!))}</span>
-              </span>
+              Order Online <ArrowRightIcon />
             </Link>
+            <a href={SITE.phoneHref} className="inline-flex items-center gap-2 font-semibold text-cream/90 transition hover:text-cream">
+              <PhoneIcon width={18} height={18} /> {SITE.phone}
+            </a>
           </div>
         </div>
       </section>
@@ -118,7 +77,6 @@ export default function Home() {
         <div className="mb-8 flex flex-wrap items-end justify-between gap-4">
           <div>
             <h2 className="font-display text-4xl font-bold uppercase tracking-wide">Popular Picks</h2>
-            <p className="mt-1 text-muted">What Manchester orders most. Add them straight from here.</p>
           </div>
           <Link href="/order" className="inline-flex items-center gap-2 rounded-full border border-ink px-5 py-2.5 font-semibold transition hover:bg-ink hover:text-cream">
             Full menu <ArrowRightIcon width={18} height={18} />
