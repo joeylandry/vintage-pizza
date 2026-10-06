@@ -56,7 +56,7 @@ export function StoreStatusBadge({
         aria-expanded={open}
         aria-controls={panelId}
         className={clsx(
-          "inline-flex items-center gap-2 rounded-full px-3 py-1 text-xs font-semibold transition",
+          "inline-flex items-center gap-1.5 whitespace-nowrap rounded-full px-2.5 py-1 text-xs sm:gap-2 sm:px-3 font-semibold transition",
           tone === "dark" ? "bg-white/10 text-cream hover:bg-white/15" : "bg-cream text-ink-soft hover:bg-line",
           !status && "invisible",
         )}
@@ -65,8 +65,16 @@ export function StoreStatusBadge({
           {status?.open && <span className="absolute inline-flex size-full animate-ping rounded-full bg-emerald-400 opacity-60" />}
           <span className={clsx("relative inline-flex size-2 rounded-full", status?.open ? "bg-emerald-400" : "bg-tomato")} />
         </span>
-        {status?.label ?? "Checking hours"}
-        <svg width="10" height="10" viewBox="0 0 10 10" aria-hidden className={clsx("transition", open && "rotate-180")}>
+        {status ? (
+          <span>
+            {/* "Closed · opens …" is too long for the phone header; the panel has the hours. */}
+            {status.label.split(" · ")[0]}
+            {status.label.includes(" · ") && <span className="hidden sm:inline"> · {status.label.split(" · ").slice(1).join(" · ")}</span>}
+          </span>
+        ) : (
+          "Checking hours"
+        )}
+        <svg width="10" height="10" viewBox="0 0 10 10" aria-hidden className={clsx("hidden transition sm:block", open && "rotate-180")}>
           <path d="M2 3.5 5 6.5 8 3.5" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
         </svg>
       </button>

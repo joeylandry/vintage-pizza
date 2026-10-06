@@ -3,7 +3,6 @@ import Link from "next/link";
 import { Deals } from "@/components/deals";
 import { ArrowRightIcon, ClockIcon, PhoneIcon, PinIcon } from "@/components/icons";
 import { PopularPicks } from "@/components/popular-picks";
-import { StoreStatusBadge } from "@/components/store-status";
 import { HOURS_DISPLAY } from "@/lib/hours";
 import { SITE } from "@/lib/site";
 
@@ -31,7 +30,6 @@ export default function Home() {
         />
         <div className="absolute inset-0 -z-10 bg-ink/70" />
         <div className="mx-auto flex min-h-[560px] max-w-3xl flex-col items-center justify-center px-4 py-16 text-center sm:min-h-[680px] sm:px-6">
-          <StoreStatusBadge className="mb-6 md:hidden" />
           <Image
             src="/images/logo-white.webp"
             alt="Vintage Pizza, est. 2014"
